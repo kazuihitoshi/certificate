@@ -23,6 +23,7 @@ docker compose run --rm ca bash
 ./ca-init.sh
 ```
 ca/private/ca.key.pem CA秘密鍵
+
 ca/certs/ca.crt Root CA配布用
 
 ### 2 Site証明書作成
@@ -39,6 +40,7 @@ ca/certs/ca.crt Root CA配布用
 ./san-cert.sh server01.ore.com [有効日数]
 ```
   ./ca/keys/nas.key.pem  秘密鍵
+  
   ./ca/issued/nas.crt  証明書
 
 ### 4 コードサイン
@@ -47,6 +49,8 @@ ca/certs/ca.crt Root CA配布用
 ./codesign-cert.sh ore-code-sign password [有効日数]
 ```
  ./ca/keys/ore-code-sign.key.pem    秘密鍵
- ./ca/issued/ore-code-sign.crt      信頼された発行元へ
+ 
+ ./ca/issued/ore-code-sign.crt      証明書  PCの信頼された発行元へ登録
+ 
  ./ca/issued/ore-code-sign.pfx      コードを作成するユーザのみ 個人の証明書欄へインストール時に証明書作成時のパスワード入力必要
 
