@@ -1,0 +1,23 @@
+services:
+  ca:
+    build: ./infra          # 下の Dockerfile を ./ca-tool/Dockerfile として置いてください
+    container_name: ca
+    hostname: ca
+    init: true                # tini 相当
+    network_mode: "none"      # 署名用コンテナなのでネットワーク遮断（推奨）
+    environment:
+      TZ: Asia/Tokyo
+    # CA作業用のローカルディレクトリをマウント
+    volumes:
+      - ./:/opt/
+    working_dir: /opt
+    # 基本は常駐せず、run --rm で一発実行を推奨。必要なら↓を sleep にして常駐も可
+    command: [ "bash", "-lc", "sleep infinity" ]
+    #user: "1000:1000"         # ホスト側の開発ユーザ UID/GID に合わせるとファイル権限が楽
+    cap_drop:
+      - ALL
+    #security_opt:
+    #  - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,mode=1777
+      - /run:rw,nosuid,nodev,mode=755
