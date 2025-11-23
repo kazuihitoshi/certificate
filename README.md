@@ -53,16 +53,18 @@ docker compose run --rm ca bash
 |-----------------|-------------|--------------|------|
 |./ca/keys/nas.key.pem 秘密鍵|/usr/local/samba/private/tls/private.key<br>tls keyfile 設定で指定| 特になし | |
 |./ca/issued/nas.crt 証明書|/usr/local/samba/private/tls/cert.pem<br>tls certfile 設定で指定| 特になし | |
-|./ca/certs/ca.crt RootCA| /var/lib/samba/private/tls/ca.pem | PCの信頼されたルート証明機関へインストール | |
+|1.で作成されたファイル<br>./ca/certs/ca.crt RootCA| /var/lib/samba/private/tls/ca.pem | PCの信頼されたルート証明機関へインストール | |
 
 ### 4 コードサイン
 
 ```bash
 ./codesign-cert.sh ore-code-sign password [有効日数]
 ```
- ./ca/keys/ore-code-sign.key.pem    秘密鍵
- 
- ./ca/issued/ore-code-sign.crt      証明書  PCの信頼された発行元へ登録
- 
- ./ca/issued/ore-code-sign.pfx      コードを作成するユーザのみ 個人の証明書欄へインストール時に証明書作成時のパスワード入力必要
+- 生成されるファイル
+
+|作成されるファイル | サーバ用途  | PC証明書インストール | 備考 |
+|-----------------|-------------|--------------|------|
+|./ca/keys/ore-code-sign.key.pem  秘密鍵|特になし |特になし | |
+|./ca/issued/ore-code-sign.crt 証明書 |特になし | PCの信頼された発行元へ登録| |
+|./ca/issued/ore-code-sign.pfx|特になし|マクロを作成するユーザの個人の証明書欄へインストール。<br>インストールの際に証明書作成時のパスワード入力必要| |
 
