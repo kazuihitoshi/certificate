@@ -22,27 +22,38 @@ docker compose run --rm ca bash
 ```bash
 ./ca-init.sh
 ```
-ca/private/ca.key.pem CA秘密鍵
-
-ca/certs/ca.crt Root CA配布用
+- 作成されるファイル
+ 
+|作成されるファイル | サーバ用途  | PC証明書インストール | 備考 |
+|-----------------|-------------|--------------|------|
+|ca/private/ca.key.pem CA秘密鍵| 特になし  |    |       |
+|ca/certs/ca.crt Root CA配布用 | 特になし  |PCの信頼されたルート証明機関へインストール| |
 
 ### 2 Site証明書作成
 
 ```bash
 ./site-cert.sh server01.ore.com [有効日数]
 ```
-./ca/keys/server01.ore.com.key.pem  秘密鍵
 
-./ca/issued/server01.ore.com.crt 証明書
+- 生成されるファイル
+
+|作成されるファイル | サーバ用途  | PC証明書インストール | 備考 |
+|-----------------|-------------|--------------|------|
+|./ca/keys/server01.ore.com.key.pem  秘密鍵|/etc/apache2/ssl/  <br> sites-enabled/default-ssl.conf<br>SSLCertificateKeyFile         /etc/apache2/ssl/server01.ore.com.key.pem | なし |  |
+|./ca/issued/server01.ore.com.crt 証明書|/etc/apache2/ssl/  <br> sites-enabled/default-ssl.conf<br>SSLCertificateFile            /etc/apache2/ssl/server01.ore.com.crt | なし |  |
 
 ### 3 ファイルサーバ証明書
 
 ```bash
 ./san-cert.sh server01.ore.com [有効日数]
 ```
-  ./ca/keys/nas.key.pem  秘密鍵
-  
-  ./ca/issued/nas.crt  証明書
+- 生成されるファイル
+
+|作成されるファイル | サーバ用途  | PC証明書インストール | 備考 |
+|-----------------|-------------|--------------|------|
+|./ca/keys/nas.key.pem 秘密鍵|/usr/local/samba/private/tls/private.key<br>tls keyfile 設定で指定| 特になし | |
+|./ca/issued/nas.crt 証明書|/usr/local/samba/private/tls/cert.pem<br>tls certfile 設定で指定| 特になし | |
+|./ca/certs/ca.crt RootCA| /var/lib/samba/private/tls/ca.pem | PCの信頼されたルート証明機関へインストール | |
 
 ### 4 コードサイン
 
