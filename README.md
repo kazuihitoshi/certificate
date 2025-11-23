@@ -32,6 +32,7 @@ ca/certs/ca.crt Root CA配布用
 ./site-cert.sh server01.ore.com [有効日数]
 ```
 ./ca/keys/server01.ore.com.key.pem  秘密鍵
+
 ./ca/issued/server01.ore.com.crt 証明書
 
 ### 3 ファイルサーバ証明書
